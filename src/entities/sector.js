@@ -15,7 +15,9 @@ reservas = new [];
 calificaciones =  new [];
 estado = new EstadoSector; // ?? En realidad queremos que sea como un enum.
 
-informarCapacidadActual(){}
+informarCapacidadActual(){
+    
+}
 liberar(Reserva){}
 ocupar(Reserva){}
 estaAbierto(){}

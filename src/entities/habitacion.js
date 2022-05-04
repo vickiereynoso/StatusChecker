@@ -1,3 +1,6 @@
+const { assert } = require('chai');
+
+
 class Habitacion{
 
     nroHabitacion = new Number;
