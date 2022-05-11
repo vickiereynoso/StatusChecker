@@ -8,7 +8,7 @@ class Huesped{
     genero = new String;
     calificaciones = new[];
     habitacion = new Habitacion;
-    calificaciones = new []
+
 
     calificar(Sector, String, double){}
     consultarEstadoSector(Sector){}
