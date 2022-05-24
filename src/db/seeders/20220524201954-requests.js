@@ -1,5 +1,6 @@
 'use strict';
 
+const {randFirstName, randLastName, randNumber} = require('@ngneat/falso')
 module.exports = {
   async up (queryInterface, Sequelize) {
     /**
