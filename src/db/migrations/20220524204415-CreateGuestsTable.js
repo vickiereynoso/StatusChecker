@@ -43,7 +43,7 @@ module.exports = {
       defaultValue: Sequelize.DataTypes.NOW
       },
         
-        
+      
     });
 
   },

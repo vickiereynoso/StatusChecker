@@ -15,8 +15,7 @@ module.exports = {
       firstName: randFirstName(), 
       lastName: randLastName(), 
       age: randNumber({min: 6, max : 75}),
-      gender: randGender(),
-      
+      gender: ((Math.round(Math.random())<1 ? "Male" : "Female"))
     })
   }
   await queryInterface.bulkInsert('guests', guests,{});
@@ -29,3 +28,4 @@ module.exports = {
 
   }
 };
+
