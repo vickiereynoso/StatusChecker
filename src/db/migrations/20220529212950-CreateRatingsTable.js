@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
         },
         review:{
-        type: Sequelize.DataTypes.String(300),
+        type: Sequelize.DataTypes.STRING,
         allowNull: false,
         unique: true
         },
