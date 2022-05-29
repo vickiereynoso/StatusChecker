@@ -21,10 +21,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       openingHour: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       closingHour: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       state: {
         type: Sequelize.STRING

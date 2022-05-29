@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     maxCapacity: DataTypes.INTEGER,
     currentOcupation: DataTypes.INTEGER,
-    openingHour: DataTypes.STRING,
-    closingHour: DataTypes.STRING,
+    openingHour: DataTypes.DATE,
+    closingHour: DataTypes.DATE,
     state: DataTypes.STRING,
     category: DataTypes.STRING
   }, {

@@ -25,17 +25,17 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER
         },
         openingHour:{
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.DATE
         },
         closingHour:{
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.DataTypes.DATE
         },
         state:{
         type: Sequelize.DataTypes.ENUM('Cerrado','Lleno','Disponible'),
         defaultValue: 'Disponible'
         },
         category:{
-        type: Sequelize.DataTypes.ENUM('Apto Niños','Aire Libre','Tratamientos','Climatizado'),
+        type: Sequelize.DataTypes.ENUM('Apto Niños'),
         },
         createdAt:{
         type: Sequelize.DataTypes.DATE,
