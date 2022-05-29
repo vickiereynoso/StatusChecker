@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Request.hasOne(models.Area, {
+/*       Request.hasOne(models.Area, {
         foreignKey: 'id_area'
       })
       Request.hasOne(models.Guest, {
         foreignKey: 'id_guest'
-      })
+      }) */
     }
   }
 
