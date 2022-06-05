@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Area.hasMany(models.Request, {
+        foreignKey: 'id_area'
+      })
+      Area.hasMany(models.Rating, {
+        foreignKey: 'id_area'
+      })
     }
   }
   Area.init({
