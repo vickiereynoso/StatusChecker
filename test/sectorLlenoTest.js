@@ -28,8 +28,8 @@ describe('New guest created succesfully', () =>{
             method : 'post',
             url: 'http://localhost:7000/guests', 
             data: {
-                id_room:191,
-                identificationNumber: 9999,
+                id_room:196,
+                identificationNumber: 325,
                 firstName: "Maria",
                 lastName: "Juarez",
                 age: 42,
@@ -54,7 +54,7 @@ describe('Testing if new guest already exists.', () =>{
             url: 'http://localhost:7000/guests', 
             data: {
 
-                identificationNumber: 9999,
+                identificationNumber: 325,
 
                 }   
         }).catch(err => {
@@ -149,7 +149,7 @@ describe('Creating a request in an available area.', () =>{
 //7. Probar traer solamente los sectores de la categoría "Apto Niños".
 //Mandar petición con los datos del huésped a dicho sector. Tiene que dar código de confirmación 201.
 
-describe('Getting all areas from "Kids" category.', () =>{
+/* describe('Getting all areas from "Kids" category.', () =>{
     it ('Return confirmation code 201 if those areas exists.', (done) => {
 
         axios({
@@ -165,4 +165,4 @@ describe('Getting all areas from "Kids" category.', () =>{
             done()   
         })
     })
-})
+}) */
