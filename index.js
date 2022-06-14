@@ -53,7 +53,7 @@ app.get('/requests/:id', async function (req, res) {
     res.send(data)
 })
 
-
+//------------------------------------------------
 
 //PARA usar en TEST peticionSectorLlenoTest.js:
 
@@ -136,6 +136,35 @@ app.get('/areas', async function (req, res) {
 })
 
 
+app.get('/areas', async function (req, res) {
+ 
+    let q={}
+    if (req.query.name && req.query.state){       
+		q.name = req.query.name
+        q.state = req.query.state
+    }
+    let area = await Area.findOne({ where: q })
+    .then(area => {
+        //console.log(data)
+        //res.send(data)
+        res.status(422).json({message:'FULL_AREA'})
+        //res.status(201).json({})
+        //console.log("ANDUVO BIEN ", res)
+    }).catch(err => {
+        //console.log(err)
+        //("ANDUVO MAL ", res)
+        res.status(422).json({})
+    }) 
+
+    console.log(area)
+    if(area===null){
+        console.log(area)
+     return res.status(422).json({})
+    }
+})
+
+
+
 /* //Intento con URL parameter:
 app.get('/areas/name', async function (req, res) {
     res.send(req.params.name)
@@ -179,27 +208,6 @@ app.post('/requests', async function(req, res){
     }
 })
 
-/* app.post('/requests', async function(req, res){
-    app.get('/areas/:id', async function(req, res){
-            let maxCapacity =  req.body.maxCapacity
-            let currentOcupation = req.body.currentOcupation
-            if(currentOcupation<maxCapacity){
-                console.log("Area Llena.")
-                return res.status(422).json({message:'AREA_FULL'})
-            }         
-        })
-    Request.create({
-        id_area: req.body.id_area,
-        id_guest: req.body.id_guest,
-        state: req.body.state,
-    }).then(data => {
-        console.log(data)
-        res.status(201).json({})
-    }).catch(err => {
-        console.log(err)
-        res.status(422).json(err)
-    })
-}) */
 
 
 
@@ -207,6 +215,7 @@ app.post('/requests', async function(req, res){
 
 
 
+//--------------------------------------------------------------------------------
 
 //Creo en la bbdd una calificacion para testear:
 app.post('/ratings', async function(req, res){
