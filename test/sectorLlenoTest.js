@@ -28,7 +28,13 @@ describe('New guest created succesfully', () =>{
             method : 'post',
             url: 'http://localhost:7000/guests', 
             data: {
-                identificationNumber: 123,
+                id_room:191,
+                identificationNumber: 9999,
+                firstName: "Maria",
+                lastName: "Juarez",
+                age: 42,
+                gender: "Female",
+
                 }
         }).then(response => {
             assert.equal(response.status, 201) //quiero asertar que el response.status sea igual a 201.
@@ -48,7 +54,7 @@ describe('Testing if new guest already exists.', () =>{
             url: 'http://localhost:7000/guests', 
             data: {
 
-                identificationNumber: 1234567,
+                identificationNumber: 9999,
 
                 }   
         }).catch(err => {
@@ -98,28 +104,8 @@ describe('An already full area should appear unavailable.', () =>{
     })
 })
 
-//5. Testeo crear un Asistencia en un sector lleno.
-//Mandar petición con los datos del huésped a dicho sector. Tiene que dar ERROR. Código:422
 
-/* describe('Declining attempt of creating a request in an unavailable area.', () =>{
-    it ('Return code 422 if request has been declined.', (done) => {
-
-        axios({
-            method: 'post',
-            url: 'http://localhost:7000/requests?id_area=3&id_guest=1234567', 
-            data: {
-                id_area: 3,
-                id_guest: 1234567
-                }
-        }).then(response => {
-            assert.equal(response.status, 201) //quiero asertar que el response.status sea igual a 201.
-            done()   
-        })
-    })
-}) */
-
-
-//Testeo marcar asistencia en un sector con lugar.
+//5.Testeo marcar asistencia en un sector con lugar.
 //Tendría que hacer un update en currentOcupation del sector también.
 describe('Creating a request in an available area.', () =>{
     it ('Return code 201 if request has been created sucessfully.', (done) => {
@@ -132,6 +118,48 @@ describe('Creating a request in an available area.', () =>{
                 id_guest: 55555,
                 state: 'Accepted'
                 }
+        }).then(response => {
+            assert.equal(response.status, 201) //quiero asertar que el response.status sea igual a 201.
+            done()   
+        })
+    })
+})
+
+//6. Testeo crear un Asistencia en un sector lleno.
+//Mandar petición con los datos del huésped a dicho sector. Tiene que dar ERROR. Código:422
+
+ describe('Declining attempt of creating a request in an unavailable area.', () =>{
+    it ('Return code 422 if request has been declined.', (done) => {
+
+        axios({
+            method: 'post',
+            url: 'http://localhost:7000/requests?id_area=6&id_guest=10', 
+            data: {
+                id_area: 6,
+                id_guest: 10
+                }
+        }).catch(err => {
+            assert.equal(err.response.data.message, 'REQUEST_DECLINED')
+            done()
+        })
+    })
+}) 
+
+
+//7. Probar traer solamente los sectores de la categoría "Apto Niños".
+//Mandar petición con los datos del huésped a dicho sector. Tiene que dar código de confirmación 201.
+
+describe('Getting all areas from "Kids" category.', () =>{
+    it ('Return confirmation code 201 if those areas exists.', (done) => {
+
+        axios({
+            method : 'get',
+            url: 'http://localhost:7000/areas?category=Apto%20Niños', 
+            data: {
+
+                category: "Apto Niños",
+
+                }   
         }).then(response => {
             assert.equal(response.status, 201) //quiero asertar que el response.status sea igual a 201.
             done()   
