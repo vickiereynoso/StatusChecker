@@ -379,36 +379,37 @@ app.get('/requests3', async function (req, res) {
 
 
 // Obtener promedio más alto de calificaciones numéricas de un sector en particular.
-/* app.get('/ratings4', async function (req, res) {
+ app.get('/ratings4', async function (req, res) {
 
     let data = {
-        conteo: await Request.count({
+        conteo: await Rating.count({
             where : {
-            id_area: 1
-        }}),
-        id_area: 1
+            id_area: req.query.id_area,
+            }
+        }),
+        scores: await Rating.findAll({
+            where :{
+                id_area: req.query.id_area,
+            },
+            attributes: ['score'],
+        }),       
+        promedio: function (){
+            for (let i = 0; i < scores.length; i++) {
+                sum += scores[i].score;
+            }
+            return total = sum/scores.length
+        }
     }
 
 
-    let max=PiscCubierta
-    if(max.conteo<PiscClimatizada.conteo){
-        max=PiscClimatizada
-    }if(max.conteo<Jacuzzi.conteo){
-        max=Jacuzzi
-    }if(max.conteo<Gym.conteo ){
-        max=Gym 
-    }if(max.conteo<Sauna.conteo){
-        max=Sauna
-    }
-
-    if(max){
+    if(data){
         //res.send(data).status(200) 
-        res.status(200).json(max) 
+        res.status(200).json(data) 
      }else{
-         res.status(404).json({message: 'NO_REQUESTS_AVAILABLE'})
+         res.status(404).json({message: 'NO_DATA_AVAILABLE'})
      }
      console.log(" ")
-})  */
+})  
 
 
 
