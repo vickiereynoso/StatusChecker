@@ -1,13 +1,14 @@
-//calificaciontest.js
-//REGLA DE NEGOCIO: Que la calificación sea entre 1 a 5.
-/*
+/*Test calificar un Área
+Se evalua que se cumplan las siguientes reglas de negocio
+REGLA DE NEGOCIOS: 
 Necesito:
-1. Testear que el huésped exista. Esperado: que exista.
-2. Testear que el sector exista.
-3. Testear que el huesped haya concurrido aunque sea 1 vez a dicho sector:
- (lo buscás en la tabla de registro de asistencias).
-4. Testear que la calificación sea mayor a 0.
-   Testear que la calificación sea menor a 11.
+1. Testear que el GUEST exista (el GUEST debe encontrarse registrado en el hotel)
+2. Testear que el AREA exista (el AREA debe existir en el hotel)
+3. Testear que el GUEST haya concurrido al menos 1 vez a dicha AREA (debe existir un 
+    registro en REQUEST que contenga al GUEST y al AREA)
+4. Testear que el SCORE del RATING esté comprendido entre 0 y 10 (el SCORE
+    debe tener un valor entre 1-10 (incluidos) para que el GUEST pueda calificar el
+    AREA)
 */
 
 const axios = require('axios');
@@ -17,16 +18,16 @@ chai.use(chaiFetch);  //chai es como un motor que ejecuta otras cosas, y acá le
 
 const { assert } = chai; 
 
-//1. Testear que el huésped exista. Esperado: que exista.
-describe("Huesped existente", () => {
-    it('el status de respuesta debe ser 200', (done)=>{
+//1. Testear que el GUEST exista.
+describe("Testing if the guest  exists in the database", () => {
+    it('Status response must be 200', (done)=>{
         axios({
             method: 'get',
-            url: 'http://localhost:7000/guests/:id',
+            url: 'http://localhost:7000/guests/24200780',
             data: {
-                id: 1,
+                identificationNumber: 24200780,
             }
-        }).then(response=>{
+        }).then(response => {
             console.log(response.status)
             console.log(response.data)
             assert.equal(response.status, 200)
@@ -37,18 +38,18 @@ describe("Huesped existente", () => {
     })
 })
 
-//2. Testear que el sector exista.
-describe("Area existente", () => {
-    it('el status de respuesta debe ser 200', (done)=>{
+//2. Testear que el AREA exista.
+describe("Testing if the area  exists in the database", () => {
+    it('Status response must be 200', (done)=>{
         axios({
             method: 'get',
             url: 'http://localhost:7000/areas/:id',
             data: {
                 id: 1,
             }
-        }).then(response=>{
+        }).then(response => {
             console.log(response.status)
-            console.log(response.data.id)
+            console.log(response.data)
             assert.equal(response.status, 200)
             done()
         }).catch(err => {
@@ -57,144 +58,52 @@ describe("Area existente", () => {
     })
 })
 
-//3. Testear que el huesped haya concurrido aunque sea 1 vez a dicho sector:
- //(lo buscás en la tabla de registro de asistencias).
-
-
-//TENGO QUE CAMBIAR LOS DATOS PARA CREAR UNA NUEVA CALIFICACIÓN. 
-//DE LO CONTRARIO TIRA ERROR PORQUE CHOCA CON UN DATO EXISTENTE
-// describe("Creando calificacion", () => {
-//     it('el status de respuesta debe ser 200', (done)=>{
-//         axios({
-//             method: 'post',
-//             url: 'http://localhost:7000/ratings',
-//             data: {
-//                 id: 36,
-//                 id_area: 4,
-//                 id_request: 60,
-//                 score: 5,
-//                 review: 'Increible',
-//             }
-//         }).then(response=>{
-//             console.log(response.status)
-//             assert.equal(response.status, 201)
-//             done()
-//         }).catch(err => {
-//             console.log(err.message)
-//         })
-//     })
-// })
-
-
-
-// describe("Testenado que un huesped haya asistido en una area", () => {
-//     it('el status debe ser 201', (done)=>{
-//         axios({
-//             method: 'get',
-//             url: 'http://localhost:7000/requests/:id_guest',
-//             data: {
-//                 id_guest: 29421209
-//             }
-//         }).then(response=>{
-//             //console.log(response.data.id)
-//             assert.equal(response.status, 201)
-//             //assert.isBelow(response.data.score, 11, "el score es menor a 10")
-//             done()
-//         })
-//     })
-// })
-
-describe("Testeando calificación menor a 11", () => {
-    it('el score debe ser menor a 11', (done)=>{
+//3. Testear que el GUEST haya concurrido al menos 1 vez a dicha AREA
+ describe("Testing if the guest has already assisted the area ", () => {
+    it('Status response must be 200', (done)=>{
         axios({
             method: 'get',
-            url: 'http://localhost:7000/ratings/1',
-        }).then(response=>{
-            assert.isBelow(response.data.score, 11, "el score es menor a 10")
-            done()
-        })
-    })
-})
-
-describe("Testeando calificación mayor a 0", () => {
-    it('el status de respuesta debe ser 200', (done)=>{
-        axios({
-            method: 'get',
-            url: 'http://localhost:7000/ratings/1',
-        }).then(response=>{
-            assert.isAbove(response.data.score, 0)
-            console.log(response.data)
-            done()
-        })
-    })
-})
-
-// describe("Creando calificacion", () => {
-//     it('el status de respuesta debe ser 200', (done)=>{
-//         axios({
-//             method: 'get',
-//             url: 'http://localhost:7000/ratings/1',
-//         }).then(response=>{
-//             //console.log(response.data.id)
-//             console.log(response.status)
-//             assert.equal(response.data.id_request, 6, "COINCIDEN")
-//             //assert.isBelow(response.data.score, 11, "el score es menor a 10")
-//             done()
-//         }).catch(err => {
-//             console.log(err.message)
-//         })
-//     })
-// })
-
-
-/*
-describe('Guest exists', () =>{
-    it ('return code 201 if guest exists', (done) => {
-
-        axios({
-            method : 'get',
-            url: 'http://localhost:7000/guests/1', 
-            params: {
-                id:1,
-                identificationNumber: 29421209,
-                }   
-        }).catch(err => {
-            assert.equal(err.response.data.message, 'GUEST_DOES_NOT_EXIST')
-            done()
-        })
-    })
-})
-
-describe('Area exists', () =>{
-    it ('return code 201 if area exists', (done) => {
-
-        axios({
-            method : 'get',
-            url: 'http://localhost:7000/areas/:id', 
-            params: {
-                id:1,
-                }   
-        }).catch(err => {
-            assert.equal(err.response.data.message, 'AREA_DOES_NOT_EXIST')
-            done()
-        })
-    })
-})
-
-
-describe('The guest checked in on area at least once.', () =>{
-    it ('return code 201 if check-in exists', (done) => {
-
-        axios({
-            method : 'get',
-            url: 'http://localhost:7000/requests/:id', 
+            url: 'http://localhost:7000/requests/24200780/1',
             data: {
-                //id_guest:1,
-                }   
-        }).catch(err => {
-            assert.equal(err.response.data.message, 'AREA_DOES_NOT_EXIST')
+                id_guest: 24200780,
+                id_area: 1
+            }
+        }).then(response=>{
+            console.log(response.status)
+            console.log(response.data)
+            assert.equal(response.status, 200)
             done()
+        }).catch(err => {
+            console.log(err.message)
         })
     })
-}) 
-*/
+})
+
+
+//Testear que el SCORE del RATING esté comprendido entre 0 y 10
+//para que efectivamente el GUEST pueda calificar el
+//AREA
+//IMPORTANTE: TENGO QUE CAMBIAR LOS DATOS PARA CREAR UNA NUEVA CALIFICACIÓN. 
+//DE LO CONTRARIO TIRA ERROR PORQUE CHOCA CON UN DATO EXISTENTE
+describe("Testing the creation of a rating", () => {
+    it('Status response must be 200', (done)=>{
+        axios({
+            method: 'post',
+            url: 'http://localhost:7000/ratings',
+            data: {
+                id: 50,
+                id_area: 5,
+                id_request: 68,
+                score: 4,
+                review: 'Genialesss',
+            }
+        }).then(response=>{
+            console.log(response.status)
+            assert.equal(response.status, 201)
+            done()
+        }).catch(err => {
+            console.log(err.message)
+        })
+    })
+})
+
