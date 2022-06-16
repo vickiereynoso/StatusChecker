@@ -340,7 +340,7 @@ describe('Getting the most frequently visited area.', () =>{
 
 //7. Obtener promedio más alto de calificaciones numéricas de un sector en particular.
 
-/* describe('Getting highest average calification of a certain area.', () =>{
+ describe('Getting highest average calification of a certain area.', () =>{
     it ('Return code 200 if sucessfull and also return the object with results to display in browser.', (done) => {
 
         axios({
@@ -354,8 +354,8 @@ describe('Getting the most frequently visited area.', () =>{
             assert.equal(response.status, 200) 
             done()   
         }).catch(err => {
-            assert.equal(err.response.data.message, 'NO_RESULTS_AVAILABLE')
+            assert.equal(err.response.data.message, 'NO_DATA_AVAILABLE')
             done()
         })
     })
-})  */
+})  
