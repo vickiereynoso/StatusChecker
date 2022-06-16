@@ -19,7 +19,7 @@ chai.use(chaiFetch);  //chai es como un motor que ejecuta otras cosas, y acá le
 const { assert } = chai; 
 
 //1. Testear que el GUEST exista.
-describe("Testing if the guest  exists in the database", () => {
+describe("Testing if the guest exists in the database", () => {
     it('Status response must be 200', (done)=>{
         axios({
             method: 'get',
@@ -38,7 +38,7 @@ describe("Testing if the guest  exists in the database", () => {
     })
 })
 
-//2. Testear que el AREA exista.
+/* //2. Testear que el AREA exista.
 describe("Testing if the area  exists in the database", () => {
     it('Status response must be 200', (done)=>{
         axios({
@@ -56,7 +56,7 @@ describe("Testing if the area  exists in the database", () => {
             console.log(err.message)
         })
     })
-})
+}) */
 
 //3. Testear que el GUEST haya concurrido al menos 1 vez a dicha AREA
  describe("Testing if the guest has already assisted the area ", () => {

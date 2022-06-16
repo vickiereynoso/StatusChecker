@@ -189,7 +189,7 @@ describe('Updating state of ocupation of a certain area.', () =>{
             method : 'get',
             url: 'http://localhost:7000/areas2?category=Apto+Ni%C3%B1os',
             data: {
-                category: "AptoNinios"
+                category: "AptoNiños"
                 }   
         }).then(response => {
             //console.log(response.data)
