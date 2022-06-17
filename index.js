@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 
 
 
-app.get('/ratings', async function(req,res){
+/* app.get('/ratings', async function(req,res){
 	
    
 	let data = await Rating.findAll()
@@ -21,7 +21,7 @@ app.get('/ratings', async function(req,res){
 app.get('/ratings/:id', async function(req,res){
     let data = await Rating.findByPk(req.params.id)
     res.send(data)
-    })
+    }) */
     
 //app.listen(8000)
 
@@ -29,7 +29,7 @@ app.get('/ratings/:id', async function(req,res){
 
 //const {Guest} = require('./src/db/models')
 
-app.get('/guests', async function(req,res){
+/* app.get('/guests', async function(req,res){
 	
 	let data = await Guest.findAll()
     res.send(data)
@@ -38,7 +38,7 @@ app.get('/guests', async function(req,res){
 app.get('/guests/:id', async function(req,res){
     let data = await Guest.findByPk(req.params.id)
     res.send(data)
-    })
+    }) */
     
 //app.listen(8000) 
 
@@ -47,7 +47,7 @@ app.get('/guests/:id', async function(req,res){
 
 //const {Area} = require('./src/db/models')
 
-app.get('/areas', async function(req,res){
+/* app.get('/areas', async function(req,res){
     let data = await Area.findAll()
 	res.send(data) 
 })
@@ -66,12 +66,12 @@ app.get('/requests', async function(req,res){
 app.get('/requests/:id', async function(req,res){
 	let data = await Request.findByPk(req.params.id)
     res.send(data)
-})
+}) */
 
 //PARA usar en TEST peticionSectorLlenoCerrado.js:
 
 //Creo en la bbdd un usuario para testear:
-app.post('/guests', async function(req, res){
+/* app.post('/guests', async function(req, res){
     console.log(req.body)
     let count = await Guest.count({
         where : {
@@ -100,11 +100,11 @@ app.post('/guests', async function(req, res){
         res.status(422).json(err)
     })
     console.log(" ")
-})
+}) */
 
 
 //Para ver si un area existe o no .
-   app.get('/areas/:id', async function (req, res) {
+/*    app.get('/areas/:id', async function (req, res) {
     let data = await Area.findByPk(req.params.id)
 
     if(data){
@@ -114,13 +114,13 @@ app.post('/guests', async function(req, res){
     }
     console.log(" ")
 })  
-
+ */
 
 //Para ver si existe un area con determinado nombre y que tenga al momento capacidad LLENA.
 //SELECT state FROM areas where id=3;
 //Intento con query string:
 //'/areas?name=Jacuzzi&state=Lleno'
-app.get('/areas', async function (req, res) {
+/* app.get('/areas', async function (req, res) {
     let data = await Area.findOne({         
         where: {
             name : req.query.name,
@@ -135,7 +135,7 @@ app.get('/areas', async function (req, res) {
          res.status(404).json({message: 'AREA_AT_FULL_CAPACITY_AT_THE_MOMENT'})
      }
      console.log(" ")
-})
+}) */
 
 /* //Intento con URL parameter:
 app.get('/areas/name', async function (req, res) {
@@ -145,7 +145,7 @@ app.get('/areas/name', async function (req, res) {
 
 
 //Creo en la bbdd una asistencia/request para testear:
-app.post('/requests', async function(req, res){
+/* app.post('/requests', async function(req, res){
     let area = await Area.findOne({
         where : {
             id: req.body.id_area,
@@ -179,7 +179,7 @@ app.post('/requests', async function(req, res){
     }
     console.log(" ")
 })
-
+ */
 //Para ver si existe un area con determinado nombre y que este CERRADO.
 //SELECT state FROM areas where id=5;
 //Intento con query string:
@@ -220,7 +220,7 @@ app.post('/requests5', async function(req, res){
 
 
 
-app.put('/areas', async function(req, res){
+/* app.put('/areas', async function(req, res){
     let area = await Area.findOne({
         where : {
             id: req.body.id_area,
@@ -245,7 +245,7 @@ app.put('/areas', async function(req, res){
     }
     console.log(" ")
 })
-
+ */
 
 
 

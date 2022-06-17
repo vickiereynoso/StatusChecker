@@ -18,7 +18,7 @@ Debería dar un código 201.
 //1. Testeo crear un Huésped.
 //Camino feliz: código 201. Se creó.
 //Error: código 422 cuando ya exista.
-describe('New guest created succesfully', () =>{
+/* describe('New guest created succesfully', () =>{
     it ('Return confirmation code 201 if guest has just been created and saved.', (done) => {
 
         axios({
@@ -39,11 +39,11 @@ describe('New guest created succesfully', () =>{
         })
     })
 })
-
+ */
 //2. Testeo ver si ya existe un Huésped.
 //Pasa el test si devuelve error 422,eso me indica que existe el Huésped en la bbdd.
 
-describe('Testing if new guest already exists.', () =>{
+/* describe('Testing if new guest already exists.', () =>{
     it ('Return error 422 if guest already exists.', (done) => {
 
         axios({
@@ -59,13 +59,13 @@ describe('Testing if new guest already exists.', () =>{
             done()
         })
     })
-})
+}) */
  
 
 //3. Testeo si el sector existe.
 //Pasa el test si devuelve 200, ya que eso me indica que el Sector existe en la bbdd.
 
-describe('Testing if area exists.', () =>{
+/* describe('Testing if area exists.', () =>{
     it ('Return confirmation code 200 if that area exists, if not it will show "AREA_NONEXISTENT".', (done) => {
 
         axios({
@@ -82,14 +82,14 @@ describe('Testing if area exists.', () =>{
             done()
         })
     })
-})
+}) */
 
 
 //4. Testeo si el sector está disponible. (En el ejemplo, está lleno.)
 //Debería tirar error.   
 
 //Quiero preguntarle a un sitio si está lleno.
-describe('Asking an already full area if it is available.', () =>{
+/* describe('Asking an already full area if it is available.', () =>{
     it ('Should return "AREA_AT_FULL_CAPACITY_AT_THE_MOMENT" if the area is full. On the contrary, if it is an available area it will return a 200 confirmation code.', (done) => {
         
         axios({
@@ -108,7 +108,7 @@ describe('Asking an already full area if it is available.', () =>{
         })
         
     })
-})
+}) */
 
 //4. Testeo si el sector está disponible. (En el ejemplo, está cerrado.)
 //Debería tirar error.   
@@ -139,7 +139,7 @@ describe('Asking an already full area if it is available.', () =>{
 //5.Testeo marcar asistencia en un sector con lugar.
 //Tendría que hacer un update en currentOcupation del sector también.
 //Si no hay lugar igual se crea una asistencia pero con estado rechazado.
- describe('Creating a request in an AVAILABLE area.', () =>{
+/*  describe('Creating a request in an AVAILABLE area.', () =>{
     it ('Return code 201 if request has been created sucessfully.', (done) => {
 
         axios({
@@ -160,12 +160,12 @@ describe('Asking an already full area if it is available.', () =>{
         })
     })
 }) 
-
+ */
 
 //6. Testeo crear un Asistencia en un sector lleno.
 //Mandar petición con los datos del huésped a dicho sector. Tiene que dar ERROR. Código:422
 
-describe('Declining attempt of creating a request in an UNAVAILABLE area.', () =>{
+/* describe('Declining attempt of creating a request in an UNAVAILABLE area.', () =>{
     it ('Return code 422 if request has been declined.', (done) => {
 
         axios({
@@ -180,7 +180,7 @@ describe('Declining attempt of creating a request in an UNAVAILABLE area.', () =
             done()
         })
     })
-})  
+})   */
 
 //6. Testeo crear un Asistencia en un sector cerrado.
 //Mandar petición con los datos del huésped a dicho sector. Tiene que dar ERROR. Código:422
@@ -202,7 +202,7 @@ describe('Declining attempt of creating a request in an CLOSED area.', () =>{
 })  
 
 //6.Testear cambiar el estado de un sector cuando este llegue a su ocupacion maxima.
-describe('Updating state of ocupation of a certain area.', () =>{
+/* describe('Updating state of ocupation of a certain area.', () =>{
     it ('Return code 201 if request has been updated sucessfully.', (done) => {
 
         axios({
@@ -218,4 +218,4 @@ describe('Updating state of ocupation of a certain area.', () =>{
         
         })
     })
-})
+}) */
