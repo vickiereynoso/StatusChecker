@@ -33,8 +33,6 @@ app.get('/guests/:id', async function (req, res) {
     res.send(data)
 })
 
-
-
 /*  app.get('/areas', async function (req, res) {
     let data = await Area.findAll()
     res.send(data)
@@ -44,7 +42,6 @@ app.get('/guests/:id', async function (req, res) {
     let data = await Area.findByPk(req.params.id)
     res.send(data)
 })    */
-
 
 app.get('/requests', async function (req, res) {
     let data = await Request.findAll()
@@ -58,11 +55,14 @@ app.get('/requests/:id', async function (req, res) {
 
 
 
-//------------------------------------------------
 
-//PARA usar en TEST peticionSectorLlenoTest.js:
 
-//Creo en la bbdd un usuario fulano para testear:
+
+// ----------------------ENDPOINTS PARA TESTS ----------------------
+
+
+
+// Endpoint para testear crear HUÉSPED (GUEST), comprobando que no exista antes.
 app.post('/guests', async function(req, res){
     console.log(req.body)
     let count = await Guest.count({
@@ -95,7 +95,7 @@ app.post('/guests', async function(req, res){
 })
 
 
-//Para ver si un area existe o no .
+// Endpoint para testear si existe un AREA.
    app.get('/areas/:id', async function (req, res) {
     let data = await Area.findByPk(req.params.id)
 
@@ -108,10 +108,7 @@ app.post('/guests', async function(req, res){
 })  
 
 
-//Para ver si existe un area con determinado nombre y que tenga al momento capacidad LLENA.
-//SELECT state FROM areas where id=3;
-//Intento con query string:
-//'/areas?name=Jacuzzi&state=Lleno'
+// Endpoint para testear si existe un AREA con determinado nombre y que tenga al momento capacidad LLENA.
 app.get('/areas', async function (req, res) {
     let data = await Area.findOne({         
         where: {
@@ -119,8 +116,6 @@ app.get('/areas', async function (req, res) {
             state : req.query.state
         }
     })
-  
-    //res.json(data)
     if(data){
         res.status(200).json(data) 
      }else{
@@ -129,14 +124,8 @@ app.get('/areas', async function (req, res) {
      console.log(" ")
 })
 
-/* //Intento con URL parameter:
-app.get('/areas/name', async function (req, res) {
-    res.send(req.params.name)
-    console.log(req.params.name)
-}) */
 
-
-//Creo en la bbdd una asistencia/request para testear:
+// Endpoint para crear/"marcar" una ASISTENCIA (REQUEST).
 app.post('/requests', async function(req, res){
     let area = await Area.findOne({
         where : {
@@ -173,8 +162,7 @@ app.post('/requests', async function(req, res){
 })
 
 
-
-//Hacer GET de un REQUEST que contenga un GUEST y un AREA particulares 
+// Endpoint para obtener una ASISTENCIA (REQUEST) que contengan un cierto GUEST y un AREA particulares.
 app.get('/requests/:id_guest/:id_area', async function(req, res){
     console.log(req.body)
     let data = await Request.findOne({
@@ -191,7 +179,7 @@ app.get('/requests/:id_guest/:id_area', async function(req, res){
      }
 })
 
-//Hacer POST de un RATING 
+// Endpoint para crear una CALIFICACIÓN (RATING).
 app.post('/ratings', async function(req, res){
 
     let score = req.body.score
@@ -214,7 +202,7 @@ app.post('/ratings', async function(req, res){
     })
 })
 
-    
+// Endpoint para obtener un HUÉSPED (GUEST) por su NÚMERO DE IDENTIFICACIÓN.
 app.get('/guests/:identificationNumber', async function(req, res){
 
     let data = await Guest.findOne({
@@ -232,21 +220,15 @@ app.get('/guests/:identificationNumber', async function(req, res){
     }
 })
 
-// app.get('/areas', async function(req,res){
-//     let data = await Area.findAll()
-// 	res.send(data) 
-// })
 
+// Endpoint obtener un AREA por su ID.
 app.get('/areas/:id', async function(req,res){
 	let data = await Area.findByPk(req.params.id)
 res.send(data)
 })
 
-// app.get('/requests', async function(req,res){
-//     let data = await Request.findAll()
-// 	res.send(data) 
-// })
 
+// Endpoint para ACTUALIZAR el estado de un AREA.
 app.put('/areas', async function(req, res){
     let area = await Area.findOne({
         where : {
@@ -273,8 +255,7 @@ app.put('/areas', async function(req, res){
     console.log(" ")
 })
 
-
-// Para traer sectores de la categoría Apto Niños
+// Endpoint para obtener las AREAS de la categoría "Apto Niños".
  app.get('/areas2', async function (req, res) {
     let data = await Area.findAll({         
         where: {
@@ -291,6 +272,7 @@ app.put('/areas', async function(req, res){
 }) 
 
 
+// Endpoint para actualizar el estado de una ASISTENCIA (REQUEST) de "Accepted" a "Checked Out" y también actualizar la OCUPACIÓN ACTUAL (CURRENT OCUPATION) del AREA.
 app.put('/requests', async function(req, res){
     let data = await Request.findOne({
         where : {
@@ -321,47 +303,8 @@ app.put('/requests', async function(req, res){
     console.log(" ")
 })
  
-//Para ver si existe un area con determinado nombre y que este CERRADO.
-//SELECT state FROM areas where id=5;
-//Intento con query string:
-//'/areas?name=Gym&state=Cerrado'
-app.post('/requests5', async function(req, res){
-    let area = await Area.findOne({
-        where : {
-            id: req.body.id_area,
-            state: "Disponible"
-        }
-    })
-    //Si no hay lugar en el area:
-    if (area==null) {
-        Request.create({
-            //Se crea igualmente un asistencia/request pero con state "declined" y se devuelve 422 con mensaje.
-            id_area: req.body.id_area,
-            id_guest: req.body.id_guest,
-            state: "Declined",
-        })
-        return res.status(422).json({message:'REQUEST_DECLINED'})
-    }else {
-    //Si hay lugar se crea una asistencia/request con state: "accepted", y se debería hacer un update en areas, sumando 1 a la currentOcupation:    
-        Request.create({
-            id_area: req.body.id_area,
-            id_guest: req.body.id_guest,
-            state: 'Accepted'
-        }).then(data => {
-            //console.log(data)
-            res.status(201).json({})
-        }).catch(err => {
-            res.status(422).json(err)
-        })
-        //Sumo 1 a currentOcupation:
-        await Area.increment({currentOcupation:1},{where:{id:req.body.id_area}})
-    }
-    console.log(" ")
-})
 
-
-
-// Para traer la descripción de un sector en particular.
+// Endpoint para obtener la DESCRIPCIÓN de un AREA en particular.
 app.get('/areas3', async function (req, res) {
     let data = await Area.findOne({         
         attributes: ['description']
@@ -376,7 +319,7 @@ app.get('/areas3', async function (req, res) {
 }) 
 
 
-// Para traer las reseñas escritas de TODOS los sectores.
+// Endpoint para obtener las RESEÑAS (REVIEWS) de TODAS LAS AREAS.
 app.get('/ratings2', async function (req, res) {
     let data = await Rating.findAll({         
         attributes: ['review']
@@ -391,7 +334,7 @@ app.get('/ratings2', async function (req, res) {
 }) 
 
 
-// Para traer las reseñas escritas de un sector en particular.
+// Endpoint para obtener las RESEÑAS (REVIEWS) de UN AREA.
 app.get('/ratings3', async function (req, res) {
     let data = await Rating.findAll({         
         attributes: ['review'],
@@ -410,7 +353,7 @@ app.get('/ratings3', async function (req, res) {
 }) 
 
 
-// Para traer todas las asistencias (requests) creadas por un huésped en particular.
+// Endpoint para obtener todas las ASISTENCIAS (REQUESTS) de un HUÉSPED (GUEST).
 app.get('/requests2', async function (req, res) {
     let data = await Request.findAll({         
         where: {
@@ -427,7 +370,7 @@ app.get('/requests2', async function (req, res) {
 }) 
 
 
-// Obtener el sector más concurrido de todos.
+// Endpoint para obtener el AREA más concurrida de todas.
 app.get('/requests3', async function (req, res) {
 
     let PiscCubierta = {
@@ -492,7 +435,8 @@ app.get('/requests3', async function (req, res) {
 
 
 
-// Obtener promedio más alto de calificaciones numéricas de un sector en particular.
+// ----------- SIN TERMINAR -------------
+// Endpoint para obtener el promedio más alto de calificaciones numéricas de un AREA en particular.
  app.get('/ratings4', async function (req, res) {
 
     let data = {
@@ -514,7 +458,6 @@ app.get('/requests3', async function (req, res) {
             return total = sum/scores.length
         }
     }
-
 
     if(data){
         //res.send(data).status(200) 
