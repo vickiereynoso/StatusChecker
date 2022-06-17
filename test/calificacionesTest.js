@@ -18,7 +18,7 @@ chai.use(chaiFetch);  //chai es como un motor que ejecuta otras cosas, y acá le
 
 const { assert } = chai; 
 
-//1. Testear que el GUEST exista.
+//Testear que el GUEST exista.
 describe("Testing if the guest exists in the database", () => {
     it('Status response must be 200', (done)=>{
         axios({
@@ -38,28 +38,9 @@ describe("Testing if the guest exists in the database", () => {
     })
 })
 
-/* //2. Testear que el AREA exista.
-describe("Testing if the area  exists in the database", () => {
-    it('Status response must be 200', (done)=>{
-        axios({
-            method: 'get',
-            url: 'http://localhost:7000/areas/:id',
-            data: {
-                id: 1,
-            }
-        }).then(response => {
-            console.log(response.status)
-            console.log(response.data)
-            assert.equal(response.status, 200)
-            done()
-        }).catch(err => {
-            console.log(err.message)
-        })
-    })
-}) */
 
-//3. Testear que el GUEST haya concurrido al menos 1 vez a dicha AREA
- describe("Testing if the guest has already assisted the area ", () => {
+//Testear que el GUEST haya concurrido al menos 1 vez a dicha AREA
+ describe("Testing if the guest has already assisted to the area ", () => {
     it('Status response must be 200', (done)=>{
         axios({
             method: 'get',
@@ -83,7 +64,7 @@ describe("Testing if the area  exists in the database", () => {
 //Testear que el SCORE del RATING esté comprendido entre 0 y 10
 //para que efectivamente el GUEST pueda calificar el
 //AREA
-//IMPORTANTE: TENGO QUE CAMBIAR LOS DATOS PARA CREAR UNA NUEVA CALIFICACIÓN. 
+//IMPORTANTE: CAMBIAR LOS DATOS PARA CREAR UNA NUEVA CALIFICACIÓN, CADA VEZ. 
 //DE LO CONTRARIO TIRA ERROR PORQUE CHOCA CON UN DATO EXISTENTE
 describe("Testing the creation of a rating", () => {
     it('Status response must be 200', (done)=>{
@@ -91,11 +72,11 @@ describe("Testing the creation of a rating", () => {
             method: 'post',
             url: 'http://localhost:7000/ratings',
             data: {
-                id: 50,
-                id_area: 5,
-                id_request: 68,
-                score: 4,
-                review: 'Genialesss',
+                id: 56,
+                id_area: 4,
+                id_request: 352,
+                score: 5,
+                review: 'Excelentes instalaciones!',
             }
         }).then(response=>{
             console.log(response.status)
