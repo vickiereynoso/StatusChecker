@@ -320,6 +320,45 @@ app.put('/requests', async function(req, res){
     }
     console.log(" ")
 })
+ 
+//Para ver si existe un area con determinado nombre y que este CERRADO.
+//SELECT state FROM areas where id=5;
+//Intento con query string:
+//'/areas?name=Gym&state=Cerrado'
+app.post('/requests5', async function(req, res){
+    let area = await Area.findOne({
+        where : {
+            id: req.body.id_area,
+            state: "Disponible"
+        }
+    })
+    //Si no hay lugar en el area:
+    if (area==null) {
+        Request.create({
+            //Se crea igualmente un asistencia/request pero con state "declined" y se devuelve 422 con mensaje.
+            id_area: req.body.id_area,
+            id_guest: req.body.id_guest,
+            state: "Declined",
+        })
+        return res.status(422).json({message:'REQUEST_DECLINED'})
+    }else {
+    //Si hay lugar se crea una asistencia/request con state: "accepted", y se debería hacer un update en areas, sumando 1 a la currentOcupation:    
+        Request.create({
+            id_area: req.body.id_area,
+            id_guest: req.body.id_guest,
+            state: 'Accepted'
+        }).then(data => {
+            //console.log(data)
+            res.status(201).json({})
+        }).catch(err => {
+            res.status(422).json(err)
+        })
+        //Sumo 1 a currentOcupation:
+        await Area.increment({currentOcupation:1},{where:{id:req.body.id_area}})
+    }
+    console.log(" ")
+})
+
 
 
 // Para traer la descripción de un sector en particular.
